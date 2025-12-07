@@ -26,13 +26,13 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true,
         trim:true,
-        validate:{
-            validator(value){
-                if(validator.isStrongPassword(value)){
-                    throw new Error("Weak password")
-                }
-            }
-        }
+        // validate:{
+        //     validator(value){
+        //         if(validator.isStrongPassword(value)){
+        //             throw new Error("Weak password")
+        //         }
+        //     }
+        // }
     },
     confirmPassword:{
         type:String,
@@ -52,7 +52,7 @@ userSchema.pre("save",async function(next){
         user.password = await bcrypt.hash(user.password,10)
         user.confirmPassword = undefined
     }
-    next()
+    
 })
 
 const User = mongoose.model("User",userSchema);
